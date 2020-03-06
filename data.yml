@@ -1,0 +1,11 @@
+apache_vhosts:
+- servername: skvarcheuski
+  documentroot: /www/main
+  serveradmin: superuser@domain.by
+  directorypath: /etc/apache2/site1
+  port: 443
+- servername: skvarcheuski2
+  documentroot: /www/env
+  serveradmin: admin@domain2.by
+  directorypath: /etc/apache2/site2
+  port: 443
