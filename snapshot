@@ -1,0 +1,72 @@
+#!/usr/bin/env python
+
+import configparser
+import datetime
+import json
+import time
+import psutil
+from datetime import datetime
+m = 1
+
+parser = argparse.ArgumentParser()
+parser.add_argument('data_type', type=str, nargs='?', const=1, default='txt', help='file format: txt or json')
+parser.add_argument('interval', type=int, nargs='?', const=1, default=300, help='Time for to collect data')
+args = parser.parse_args()
+
+
+class Monitoring:
+    
+    def __init__(self):
+        self.cpu = (psutil.cpu_percent())
+        self.memory = (psutil.Process().memory_info().rss / (1024 * 1024))
+        self.vmemory = (psutil.virtual_memory().used / (1024 * 1024))
+        self.io = (psutil.disk_io_counters().write_bytes / (1024 * 1024))
+        self.network = (psutil.net_io_counters().bytes_sent / (1024 * 1024))
+
+    def get_cpu(self):
+        return self.cpu
+
+    def get_memory(self):
+        return self.memory
+
+    def get_vmemory(self):
+        return self.vmemory
+
+    def get_io(self):
+        return self.io
+
+    def get_network(self):
+        return self.network
+
+
+def result():
+   mon = Monitoring()
+        if args.data_type == 'txt':
+        while True:
+            m += 1
+            s = "SNAPSHOT " + str(i) + ": " + "TIME STAMP: " + str(time.ctime()) + \
+                " CPU:" + mon.cpu() + "%" + " MEMORY: " + \
+                "% VIRTUAL_MEMORY: " + mon.vmemory() + \
+                "% IO: " + mon.io() + " Network: " + mon.network() + '\n'
+            output_file = open('output.txt', 'a')
+            output_file.write(s)
+            output_file.close()
+            time.sleep(args.interval * 60)
+    elif args.data_type == 'json':
+        while True:
+            m += 1
+            out_data = {
+                'SNAPSHOT': str(m), 'Time STAMP': str(time.ctime()),
+                'CPU': mon.cpu(),
+                'MEMORY': mon.memory(),
+                'VIRTUAL_MEMORY': mon.vmemory(),
+                'IO_info': mon.io(),
+                'NET_info': mon.network()
+            }
+            with open("output.json", "a") as file:
+                json.dump(out_data, file, indent=3)
+                file.write('\n')
+            time.sleep(args.interval * 60)
+
+result()
+
