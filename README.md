@@ -1,8 +1,7 @@
- 
-##Description
-#It`s a python app which monitors your system
+Description
+It`s a python app which monitors your system
 
-#It monitors the following options:
+It monitors the following options:
 
 - Overall CPU load
 
@@ -15,6 +14,7 @@
 - Network information
 
 
-##How to use
-usage: github.py [-h] [--version] -u USER -r REPO [-o] [-c] [-d] [--stat] [--deletions]
+How to use:
+
+github.py [-h] [--version] -u USER -r REPO [-o] [-c] [-d] [--stat] [--deletions]
 the following arguments are required: -u, -r
