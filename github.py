@@ -13,8 +13,7 @@ parser.add_argument("--version", help="version", action="version",
 parser.add_argument("-u", dest="user", type=str, required=True,
                     help="User whose statistics are gathering (required)")
 parser.add_argument("-r", dest="repo", type=str, required=True,
-                    help="Repository whose statistics are gathering (requ"
-                         "ired)")
+                    help="Repository whose statistics are gathering (required)")
 parser.add_argument("-o", dest="opened", action="store_true",
                     help="User who opened pull request")
 parser.add_argument("-c", dest="closed", action="store_true",
@@ -34,6 +33,7 @@ def opened_pr(user, repo):
                            "repos/%s/%s/pulls?per_page=100" % (user, repo),
                            auth=(input(), getpass.getpass()))
 
+    
     data_pr = data_pr.json()
 
     for i in range(len(data_pr)):
@@ -50,6 +50,7 @@ def closed_pr(user, repo):
                            auth=(input(), getpass.getpass()))
     data_pr = data_pr.json()
 
+    
     for i in range(len(data_pr)):
         data_tmp = data_pr[i]["user"]["login"]
         title_pr = data_pr[i]["title"]
@@ -64,7 +65,8 @@ def days_opened(user, repo):
                            % (user, repo), auth=(input(), getpass.getpass()))
     data_pr = data_pr.json()
 
-    for i in range(len(data_pr)):
+   
+ for i in range(len(data_pr)):
         data_tmp = data_pr[i]["created_at"]
         obj_date = dateutil.parser.isoparse(data_tmp)
         obj_date = time.mktime(obj_date.timetuple())
@@ -81,6 +83,8 @@ def stat_merg_closed(user, repo):
                            "repos/%s/%s/pulls?state=all&per_page=100"
                            % (user, repo),
                            auth=(input(), getpass.getpass()))
+    
+    
     data_pr = data_pr.json()
     j = k = 0
     for i in range(len(data_pr)):
